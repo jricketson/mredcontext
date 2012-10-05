@@ -1,13 +1,22 @@
 #pageWrapper {
-  float: left; 
-  position: absolute; 
+  float: left;
+  position: absolute;
   left: 0;
   right: 0;
-  top: 0; 
-  bottom: 0
-}
+  top: 0;
+  bottom: 0; }
 
 .editor {
-  height: 25%;
-}
+  height: 25%; }
 
+#fileFinder {
+  position: absolute;
+  width: 300px;
+  margin-left: -150px;
+  left: 50%;
+  top: 0;
+  border: 1px solid black;
+  height: 300px;
+  display: none; }
+  #fileFinder input.filename {
+    width: 100%; }
