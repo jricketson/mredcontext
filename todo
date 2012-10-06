@@ -2,6 +2,7 @@ write file
 remember layout
 exit
 close editors
+when click on editor: bring to front
 
 show all unsaved
 change font size
