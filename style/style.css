@@ -14,10 +14,10 @@
   top: 0;
   left: 0;
   background: white;
-  padding: 0 15px 37px 15px;
+  padding: 0 10px 32px 10px;
   background: #dddddd;
   -webkit-border-radius: 5px;
-  border-radius: 5px;
+  border-radius: 7px;
   cursor: move; }
   .editor .titleBar {
     height: 22px;
@@ -31,6 +31,7 @@
     right: 0;
     cursor: se-resize; }
   .editor .codeEditor {
+    font-size: 120%;
     background: white; }
 
 #fileFinder {
