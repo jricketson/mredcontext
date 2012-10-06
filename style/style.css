@@ -46,3 +46,11 @@
   background: white; }
   #fileFinder input.filename {
     width: 100%; }
+
+#unsavedFileList {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100px;
+  height: 100px;
+  background: red; }
