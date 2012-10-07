@@ -3,5 +3,6 @@ remember layout
 exit
 close editors
 when click on editor: bring to front
+ignore things that are gitignored
 
 change font size
