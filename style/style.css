@@ -31,6 +31,16 @@
     bottom: 0;
     right: 0;
     cursor: se-resize; }
+  .editor .closer {
+    font-family: sans-serif;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 18px;
+    height: 18px;
+    cursor: pointer; }
+    .editor .closer:before {
+      content: "x"; }
   .editor .codeEditor {
     font-size: 120%;
     background: white; }
