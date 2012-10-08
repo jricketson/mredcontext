@@ -17,3 +17,4 @@ allow open in a directory
 
 GOTO SYMBOL
   find definition of symbol and show it
+navigation overview
