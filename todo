@@ -1,5 +1,17 @@
-exit
-close editors
+clear filefinder input on show
+when filefinder input is empty: don't show anything
+filefinder needs to respond to cursor
+style sass files as css
+style file finder
+keyboard shortcuts for:
+  close
+  save file
+newly opened files should be brought to front
+make files 80chars wide
+
+save these needs to have a high z-index
+html filetype is not rendering
 ignore things that are gitignored
 
 change font size
+

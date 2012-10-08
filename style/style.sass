@@ -1,3 +1,5 @@
+@import "mixins"
+
 #pageWrapper
   float: left
   position: absolute
@@ -20,7 +22,7 @@
   .moveHandle
     cursor: move
   .titleBar
-    font-family: sans-serif
+    font-family: sans-serif 
     height: 22px
     width: 100%
   .resizer
@@ -47,17 +49,36 @@
 
 #fileFinder
   position: absolute
-  width: 300px
+  width: 450px
   margin-left: (-300px/2)
   left: 50%
   top: 0
-  border: 1px solid black
-  height: 300px
+  height: 400px
   display: none
   background: white
-
+  font-family: sans-serif
+  overflow: hidden
   input.filename
-    width: 100%
+    width: 100%  
+    height: 20px
+  .results 
+    overflow-x: hidden
+    overflow-y: auto
+    height: 380px
+    .item
+      @include list_item
+      overflow-x: hidden
+      overflow-y: auto
+      .item_inner
+        margin: 2px
+        overflow: hidden
+        text-overflow: ellipsis
+        margin: 4px 0
+        padding: 5px 16px
+        .name
+          font-size: 110%
+        .fullName
+          font-size: 80%
 
 #unsavedFileList
   position: absolute
@@ -67,43 +88,17 @@
   background: #DDD
   font-family: sans-serif
   display: none
+  z-index: 100000
+  padding: 2px
   .titleBar
     cursor: move
     padding: 2px
-  .unsavedFiles .name
-    overflow: hidden
-    text-overflow: ellipsis
-    -webkit-border-radius: 0
-    padding: .5em
-    margin: 0
-    width: 100%
+  .unsavedFiles .item
+    @include list_item
+    .name
+      margin: 2px
+      overflow: hidden
+      text-overflow: ellipsis
+      margin: 4px 0
+      padding: 5px 16px
 
-.button
-  display: inline-block
-  vertical-align: baseline
-  margin: 0 2px
-  outline: none
-  cursor: pointer
-  text-align: center
-  text-decoration: none
-  font: 14px/100% Arial, Helvetica, sans-serif
-  padding: .5em 2em .55em
-  text-shadow: 0 1px 1px rgba(0,0,0,.3)
-  -webkit-border-radius: .5em 
-  border-radius: .5em
-  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2)
-  box-shadow: 0 1px 2px rgba(0,0,0,.2)
-  &:hover 
-    text-decoration: none
-  &:active
-    position: relative
-    top: 1px
-
-  &.black
-    color: #d7d7d7
-    border: solid 1px #333
-    background: -webkit-gradient(linear, left top, left bottom, from(#666), to(#000))
-    &:hover
-      background: -webkit-gradient(linear, left top, left bottom, from(#444), to(#000))
-    &:active
-      background: -webkit-gradient(linear, left top, left bottom, from(#000), to(#444))
