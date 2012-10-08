@@ -7,14 +7,13 @@
   bottom: 0; }
 
 .editor {
-  border: 1px solid black;
   position: absolute;
   top: 0;
   left: 0;
   background: white;
   padding: 0 10px 32px 10px;
-  background: #dddddd;
-  -webkit-border-radius: 5px;
+  background: #555555;
+  -webkit-border-radius: 6px;
   border-radius: 5px;
   cursor: move; }
   .editor .moveHandle {
@@ -22,7 +21,10 @@
   .editor .titleBar {
     font-family: sans-serif;
     height: 22px;
-    width: 100%; }
+    width: 100%;
+    color: white;
+    font-size: 80%;
+    padding-top: 2px; }
   .editor .resizer {
     background-image: url("../images/resize.png");
     width: 18px;
@@ -33,6 +35,7 @@
     cursor: se-resize; }
   .editor .closer {
     font-family: sans-serif;
+    color: white;
     position: absolute;
     top: 0;
     right: 0;
@@ -51,18 +54,19 @@
   margin-left: -150px;
   left: 50%;
   top: 0;
-  height: 400px;
+  max-height: 400px;
   display: none;
   background: white;
   font-family: sans-serif;
-  overflow: hidden; }
+  overflow: hidden;
+  z-index: 100000; }
   #fileFinder input.filename {
     width: 100%;
     height: 20px; }
   #fileFinder .results {
     overflow-x: hidden;
     overflow-y: auto;
-    height: 380px; }
+    max-height: 380px; }
     #fileFinder .results .item {
       padding: 0;
       width: 100%;

@@ -2,10 +2,12 @@ clear filefinder input on show
 when filefinder input is empty: don't show anything
 filefinder needs to respond to cursor
 style sass files as css
-style file finder
 keyboard shortcuts for:
   close
   save file
+  make wider/narrower
+  make longer/shorter
+  move up/down/left/right
 newly opened files should be brought to front
 make files 80chars wide
 
@@ -14,4 +16,7 @@ html filetype is not rendering
 ignore things that are gitignored
 
 change font size
+manage z-index better: use a stack of most recently focused in the editor-pane
 
+GOTO SYMBOL
+  find definition of symbol and show it
