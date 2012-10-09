@@ -5,16 +5,16 @@ keyboard shortcuts for:
   make wider/narrower
   make longer/shorter
   move up/down/left/right
-newly opened files should be brought to front
-make files 80chars wide
 
 html filetype is not rendering
-ignore things that are gitignored
 
-change font size
+change font size (per editor?)
 manage z-index better: use a stack of most recently focused in the editor-pane
-allow open in a directory
-
-GOTO SYMBOL
-  find definition of symbol and show it in another editor
+allow open in a directory <-- not possible until implemented by nw
 navigation overview in panel at top
+
+GOTO SYMBOL <-- this is the point
+  find definition of symbol and show it in another editor
+
+LATER
+ignore things that are gitignored
