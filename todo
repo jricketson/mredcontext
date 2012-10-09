@@ -1,6 +1,3 @@
-refactor to use command pattern.
- -- Make each feature self contained.
-
 filefinder needs to respond to cursor
 keyboard shortcuts for:
  
@@ -19,6 +16,10 @@ GOTO SYMBOL <-- this is the point
   find all definitions in a list (like the file finder) and allow user to choose
   go to line
 
+watch files for changes on disk
+  - new files/directories
+  - updates to loaded files
+  - deleted files/directories
 
 LATER
 ignore things that are gitignored

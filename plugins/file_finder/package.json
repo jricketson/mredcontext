@@ -1,0 +1,2 @@
+{ "name" : "file_finder plugin",
+  "main" : "./file_finder_view" }

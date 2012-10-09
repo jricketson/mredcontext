@@ -1,6 +1,8 @@
 Haml = require('haml')
 events = require('events')
 mixin = require('mixin')
+fileList = require('models/file_list').fileList
+editorPane = require('views/editor_pane_view').editorPane
 
 class FileFinderView extends Backbone.View
   id: "fileFinder"
@@ -51,5 +53,10 @@ class FileFinderView extends Backbone.View
     @
 
 mixin.include(FileFinderView, events.EventEmitter::)
-exports.FileFinderView = FileFinderView
+exports.register = ->
+  fileFinder = new FileFinderView(model:fileList())
+  $("body").append fileFinder.render().el
+  fileFinder.on('fileSelected', (file) -> editorPane().showEditorForFile(file))
+  $(document).bind('keydown', 'ctrl+p', -> fileFinder.show())
+
 
