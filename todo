@@ -1,7 +1,7 @@
 filefinder needs to respond to cursor
 keyboard shortcuts for:
+ 
   close
-  save file
   make wider/narrower
   make longer/shorter
   move up/down/left/right
@@ -9,7 +9,6 @@ keyboard shortcuts for:
 html filetype is not rendering
 
 change font size (per editor?)
-manage z-index better: use a stack of most recently focused in the editor-pane
 allow open in a directory <-- not possible until implemented by nw
 navigation overview in panel at top
 

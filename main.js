@@ -6,6 +6,7 @@
   global.CodeMirror = CodeMirror;
   global.Backbone = Backbone;
   global.process = process;
+  global._ = _;
 
   require("coffee-script");
   bootstrap = require("bootstrap");
