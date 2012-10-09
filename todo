@@ -1,3 +1,6 @@
+refactor to use command pattern.
+ -- Make each feature self contained.
+
 filefinder needs to respond to cursor
 keyboard shortcuts for:
  
@@ -13,7 +16,9 @@ allow open in a directory <-- not possible until implemented by nw
 navigation overview in panel at top
 
 GOTO SYMBOL <-- this is the point
-  find definition of symbol and show it in another editor
+  find all definitions in a list (like the file finder) and allow user to choose
+  go to line
+
 
 LATER
 ignore things that are gitignored
