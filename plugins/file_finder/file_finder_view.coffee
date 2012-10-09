@@ -3,6 +3,8 @@ events = require('events')
 mixin = require('mixin')
 fileList = require('models/file_list').fileList
 editorPane = require('views/editor_pane_view').editorPane
+configuration = require('configuration').configuration
+searcher = require('./searcher')
 
 class FileFinderView extends Backbone.View
   id: "fileFinder"
@@ -22,23 +24,32 @@ class FileFinderView extends Backbone.View
     "keyup input" : "_filenameChanged"
     "click .results .item": "_selectFile"
 
+  initialize: ->
+    @_state = searchIndex: ';'
+    @model.on('add', @_indexFile)
+    @searcher = new searcher.Searcher(@_state)
+
+  _indexFile: (file) =>
+    @_state.searchIndex += "#{file.projectPath()};"
+
   render: ->
     @$el.html(@template())
     @
 
   _selectFile: (e) ->
-    @model.resetSearch()
+    @searcher.resetSearch()
     @emit('fileSelected', @model.getByPath($(e.currentTarget).data('path')))
     @hide()
 
   _filenameChanged: (e) ->
     searchString = $(e.target).val()
-    if searchString == ''
-      @model.resetSearch()
-      return @_removeResults()
     @_removeResults()
-    @model.filesMatching(searchString).progress (match) =>
+    if searchString == ''
+      return @searcher.resetSearch()
+    @searcher.filesMatching(searchString).progress((matchPath) =>
+      match=fileList().getByPath(configuration.get('rootPath')+matchPath)
       @$el.find(".results").append(@matchtemplate('match':match))
+    ).done(-> console.log("search for '#{searchString}' completed"))
 
   _removeResults: ->
     @$el.find(".results").empty()
@@ -58,5 +69,3 @@ exports.register = ->
   $("body").append fileFinder.render().el
   fileFinder.on('fileSelected', (file) -> editorPane().showEditorForFile(file))
   $(document).bind('keydown', 'ctrl+p', -> fileFinder.show())
-
-
