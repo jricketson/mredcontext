@@ -1,0 +1,2 @@
+{ "name" : "find_function_definition plugin",
+  "main" : "./find_function_def" }

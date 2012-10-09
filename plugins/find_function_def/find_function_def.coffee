@@ -1,7 +1,7 @@
 fileList = require('models/file_list').fileList
 editorPane = require('views/editor_pane_view').editorPane
 
-class FindFunctionDefinitionCommand
+class FindFunctionDefinition
   DELAY:1
   constructor: ->
     @_index=0
@@ -32,7 +32,7 @@ class FindFunctionDefinitionCommand
 
   _delaySearch: =>
     @_index += 1
-    @_timer = setTimeout(@_search, FindFunctionDefinitionCommand.DELAY)
+    @_timer = setTimeout(@_search, FindFunctionDefinition.DELAY)
 
   _findLineMatching: (file, functionName) ->
     promise = new $.Deferred()
@@ -46,4 +46,7 @@ class FindFunctionDefinitionCommand
   _openFileToDefinition: (file, line) ->
     editorPane().showEditorForFile(file, line:line)
 
-exports.findFunction = -> @_findFunction ||= new FindFunctionDefinitionCommand()
+instance = -> new FindFunctionDefinition()
+
+exports.register = ->
+  $(document).bind('keydown', 'ctrl+/', -> instance().run())
