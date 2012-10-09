@@ -16,5 +16,5 @@ manage z-index better: use a stack of most recently focused in the editor-pane
 allow open in a directory
 
 GOTO SYMBOL
-  find definition of symbol and show it
-navigation overview
+  find definition of symbol and show it in another editor
+navigation overview in panel at top
