@@ -10,11 +10,23 @@ html filetype is not rendering
 
 change font size (per editor?)
 allow open in a directory <-- not possible until implemented by nw
-navigation overview in panel at top
 
-GOTO SYMBOL <-- this is the point
+GOTO SYMBOL
   find all definitions in a list (like the file finder) and allow user to choose
   go to line
+
+NAVIGATION
+  navigation overview in panel at top
+  user can drag the canvas
+  make canvas zoomable
+  user can click on overview to recenter
+
+EDITORS
+  editors should stay out of each others way
+  many editors for the same file should update each other
+
+NOTES
+  user can create a note and attach to the canvas
 
 watch files for changes on disk
   - new files/directories

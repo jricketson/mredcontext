@@ -1,6 +1,6 @@
-folder_lib = require('models/folder')
-file_lib = require('models/file')
-configuration = require('configuration').configuration
+folder_lib = require('./folder')
+file_lib = require('./file')
+configuration = require('../configuration').configuration
 
 class FileList extends Backbone.Collection
   initialize: (models) ->

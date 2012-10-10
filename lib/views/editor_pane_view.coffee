@@ -1,4 +1,4 @@
-editor = require('views/editor_view') 
+editor = require('./editor_view') 
 
 class EditorPaneView extends Backbone.View
 

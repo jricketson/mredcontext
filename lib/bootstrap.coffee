@@ -1,8 +1,8 @@
 fs = require ('fs')
-FileModel = require('models/file')
-fileList = require('models/file_list').fileList
-editorPane = require('views/editor_pane_view').editorPane
-configuration = require('configuration').configuration
+FileModel = require('./models/file')
+fileList = require('./models/file_list').fileList
+editorPane = require('./views/editor_pane_view').editorPane
+configuration = require('./configuration').configuration
 
 setupShortcuts= ->
   $(document).bind('keydown', 'ctrl+s', -> editorPane().saveActive())

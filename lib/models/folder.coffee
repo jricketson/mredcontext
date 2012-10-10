@@ -1,7 +1,7 @@
 fs = require('fs')
 path = require('path')
-mime = require('mime')
-file = require('models/file')
+mime = require('../mime')
+file = require('./file')
 
 class Folder
   constructor: (@path) ->

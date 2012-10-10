@@ -9,7 +9,7 @@
   global._ = _;
 
   require("coffee-script");
-  bootstrap = require("bootstrap");
+  bootstrap = require("./lib/bootstrap");
 
   $(document).ready(function() {
     return bootstrap.bootstrap();

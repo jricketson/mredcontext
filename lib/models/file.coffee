@@ -1,5 +1,5 @@
 fs = require('fs')
-configuration = require('configuration').configuration
+configuration = require('../configuration').configuration
 
 class File extends Backbone.Model
 

@@ -1,6 +1,6 @@
 Haml = require('haml')
-mixin = require('mixin')
-movable = require('views/mixins/movable')
+mixin = require('../../lib/mixin')
+movable = require('../../lib/views/mixins/movable')
 
 class UnsavedFileListView extends Backbone.View
 

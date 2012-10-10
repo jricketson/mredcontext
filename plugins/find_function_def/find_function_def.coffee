@@ -1,5 +1,5 @@
-fileList = require('models/file_list').fileList
-editorPane = require('views/editor_pane_view').editorPane
+fileList = require('../../lib/models/file_list').fileList
+editorPane = require('../../lib/views/editor_pane_view').editorPane
 
 class FindFunctionDefinition
   DELAY:1

@@ -1,9 +1,9 @@
 Haml = require('haml')
 events = require('events')
-mixin = require('mixin')
-fileList = require('models/file_list').fileList
-editorPane = require('views/editor_pane_view').editorPane
-configuration = require('configuration').configuration
+mixin = require('../../lib/mixin')
+fileList = require('../../lib/models/file_list').fileList
+editorPane = require('../../lib/views/editor_pane_view').editorPane
+configuration = require('../../lib/configuration').configuration
 searcher = require('./searcher')
 
 class FileFinderView extends Backbone.View
