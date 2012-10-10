@@ -1,6 +1,7 @@
 Haml = require('haml')
 mixin = require('../mixin')
 movable = require('./mixins/movable')
+resizable = require('./mixins/resizable')
 
 class EditorView extends Backbone.View
   className: 'editor'
@@ -99,29 +100,6 @@ class EditorView extends Backbone.View
     )
     @codeEditor.refresh()
 
-  _startResizing: (e) ->
-    e.stopPropagation()
-    @_startPosition=
-        x:e.clientX
-        y:e.clientY
-        width: @$el.width()
-        height: @$el.height()
-    $('body').css('-webkit-user-select':'none')
-
-    mousemove = (e) => 
-      @setHeightAndWidth(
-          @_startPosition.height+(e.clientY-@_startPosition.y),
-          @_startPosition.width+(e.clientX-@_startPosition.x)
-      )
-      @trigger('resized')
-
-    mouseup = -> 
-      $('body').css('-webkit-user-select':'')
-      $(document).off('mousemove', mousemove)
-      $(document).off('mouseup', mouseup)
-
-    $(document).on('mousemove', mousemove)
-    $(document).on('mouseup', mouseup)
-
 mixin.include(EditorView, movable)
+mixin.include(EditorView, resizable)
 exports.EditorView = EditorView
