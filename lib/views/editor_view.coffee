@@ -25,6 +25,7 @@ class EditorView extends Backbone.View
       @codeEditor.setOption('mode', @model.get('fileType')) if @codeEditor?
     )
     @position = options.position
+    @_initialLine = options.line
 
   toJSON: ->
     path: @model.get('path')
@@ -33,6 +34,7 @@ class EditorView extends Backbone.View
       left: @$el.position().left
       width: @$el.width()
       height: @$el.height()
+    line: @_scrollLine()
 
   getSelection: -> @codeEditor.getSelection()
   save: -> @model.writeContentsToDisk()
@@ -44,9 +46,12 @@ class EditorView extends Backbone.View
     @_bringToFront(e)
 
   _setFileContent: =>
+    return unless @model.loaded()
     @_listenToCodeEditorChanges = false
     @codeEditor.setValue(@model.get('content'))
     @_listenToCodeEditorChanges = true
+    return unless @_initialLine
+    setTimeout((=> @_scrollToLine(@_initialLine)), 100 )
 
   render: ->
     @$el.html(@template(model:@model))
@@ -58,7 +63,7 @@ class EditorView extends Backbone.View
     )
     @codeEditor = CodeMirror(@$el.find('.codeEditor')[0], 
       mode:  @model.get('fileType')
-      lineWrapping: true
+      lineWrapping: false
       autoClearEmptyLines: true
       lineNumbers: true
       onChange: => 
@@ -73,6 +78,13 @@ class EditorView extends Backbone.View
       )
     , 10)    
     @
+
+  _scrollLine: ->
+    @codeEditor.coordsChar(@codeEditor.getScrollInfo()).line
+
+  _scrollToLine: (line) ->
+    coords = @codeEditor.charCoords({line:line,ch:0}, 'local')
+    @codeEditor.scrollTo(0, coords.y)
 
   setHeightAndWidth: (height, width) ->
     hDiff = height - @$el.height()

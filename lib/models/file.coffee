@@ -14,10 +14,9 @@ class File extends Backbone.Model
     )
     @_rootPath=configuration.get('rootPath')
 
-  projectPath: ->
-    @get('path').substr(@_rootPath.length)
-  name: ->
-    @get('path').split('/').pop()
+  projectPath: -> @get('path').substr(@_rootPath.length)
+  name: -> @get('path').split('/').pop()
+  loaded: -> @_alreadyLoaded
 
   loadFromDiskIfNeeded: ->
     readPromise = new $.Deferred()

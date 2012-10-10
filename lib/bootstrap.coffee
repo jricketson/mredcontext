@@ -17,7 +17,7 @@ reloadLayout= ->
     unless file?
       file = new FileModel.File(path:conf.path)
       fileList().add(file)
-    editorPane().showEditorForFile(file, position:conf.position)
+    editorPane().showEditorForFile(file, position:conf.position, line:conf.line)
 
 loadPlugins= ->
   promise = new $.Deferred()

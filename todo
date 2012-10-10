@@ -33,5 +33,8 @@ watch files for changes on disk
   - updates to loaded files
   - deleted files/directories
 
+BUG
+  the configuration had an extra curly... I think that maybe the config writer should have a lock.
+
 LATER
 ignore things that are gitignored
