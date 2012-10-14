@@ -1,3 +1,4 @@
+open file by name needs to sort matches by name higher than match by path
 filefinder needs to respond to cursor
 keyboard shortcuts for:
  

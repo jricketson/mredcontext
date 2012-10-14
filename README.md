@@ -4,6 +4,8 @@ This is a code editor. The intention is to allow developers to have better conte
 
 I am currently investigating how to test this. It is reasonably straightforward to do run command-line tests of some of the code, but currently it is impossible to run integration tests, and also apparently impossible to run in-browser unit tests.
 
+So, I am stopping developing unit tests for the moment, until I hear back from the developers of node-webkit if they have any ideas.
+
 # How to run
 
 First download [node-webkit binary](http://github.com/rogerwang/node-webkit) for your platform, and then execute:

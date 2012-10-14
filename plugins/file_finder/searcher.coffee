@@ -2,31 +2,34 @@ class Searcher
   @ANY: '[^;]*'
   @SEARCH_LIMIT=100
 
-  constructor: (@state) ->
+  constructor: (@_state) ->
 
   resetSearch: ->
-    clearTimeout(@timeout) if @timeout?
-    @count= 0
+    clearTimeout(@_timeout) if @_timeout?
+    @_count = 0
 
-  filesMatching: (@searchString) ->
+  filesMatching: (@_searchString) ->
     @resetSearch()
-    @promise = new $.Deferred()
+    @_promise = new $.Deferred()
     components = [
       Searcher.ANY, 
-      searchString.replace(new RegExp(' ','g'),'').split('').join(Searcher.ANY),
+      @_searchString.replace(new RegExp(' ','g'),'').split('').join(Searcher.ANY),
       Searcher.ANY
     ]
-    @pattern = new RegExp(";(#{components.join('')});",'gi')
-    @timeout = setTimeout(@_filesMatching, 10)
-    @promise
+    @_pattern = new RegExp(";(#{components.join('')});",'gi')
+    @_deferRun()
+    @_promise
+
+  _deferRun: ->
+    @_count+=1
+    @_timeout = setTimeout(@_filesMatching, 10) if @_count < Searcher.SEARCH_LIMIT
 
   _filesMatching: =>
-    if (match=@pattern.exec(@state.searchIndex))?
-      @promise.notify(match[1])
-      @count+=1
-      @timeout = setTimeout(@_filesMatching, 10) if @count < Searcher.SEARCH_LIMIT
+    if (match=@_pattern.exec(@_state.searchIndex))?
+      @_promise.notify(match[1])
+      @_deferRun()
     else
-      @promise.resolve()
-      @resetSearch
+      @_promise.resolve()
+      @resetSearch()
 
 exports.Searcher = Searcher
