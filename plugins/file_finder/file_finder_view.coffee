@@ -5,6 +5,7 @@ fileList = require('../../lib/models/file_list').fileList
 editorPane = require('../../lib/views/editor_pane_view').editorPane
 configuration = require('../../lib/configuration').configuration
 searcher = require('./searcher')
+Backbone = require ('backbone')
 
 class FileFinderView extends Backbone.View
   id: "fileFinder"

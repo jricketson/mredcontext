@@ -1,4 +1,6 @@
 editor = require('./editor_view') 
+Backbone = require('backbone')
+_ = require('underscore')
 
 class EditorPaneView extends Backbone.View
 
@@ -11,11 +13,9 @@ class EditorPaneView extends Backbone.View
     @$el.append newEd.el
     setTimeout((-> newEd.$el.click()),10) #to give focus, so that it moves to front
 
-  saveActive: ->
-    @activeEditor().save()
-
-  activeEditor: ->
-    _.last(@_editors)
+  saveActive: -> @activeEditor().save()
+  activeEditor: -> _.last(@_editors)
+  getSelection: -> @activeEditor().getSelection()
 
   _newEditor: (file, options) ->
     newEd = new editor.EditorView($.extend({model:file}, options)).render()
@@ -48,4 +48,4 @@ class EditorPaneView extends Backbone.View
     layout = (e.toJSON() for e in @_editors)
     @trigger('layoutUpdated', layout)
 
-exports.editorPane = -> @_editor_pane ||= new EditorPaneView(el:$('#editorPane'))
+exports.editorPane = -> @_instances._editor_pane ||= new EditorPaneView(el:$('#editorPane'))

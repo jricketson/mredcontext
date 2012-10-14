@@ -1,24 +1,27 @@
-fileList = require('../../lib/models/file_list').fileList
-editorPane = require('../../lib/views/editor_pane_view').editorPane
+fileList = require("#{process.cwd()}/lib/models/file_list").fileList
+editorPane = require("#{process.cwd()}/lib/views/editor_pane_view").editorPane
 
 class FindFunctionDefinition
   DELAY:1
-  constructor: ->
-    @_index=0
 
-  run: ->
-    @selection = @_findSelection()
-    #This stops at the first match and opens it, maybe we want to show all matches incrementally?
-    @_regex = new RegExp(@selection + '\\s*[:=]\\s*\\(?.*\\)?[-=]>')
-    console.log("searching for #{@_regex}")
+  constructor: ->
+    @_resetSearch()
+
+  search: ->
+    @_resetSearch()
+    @_regex = new RegExp(@_getSelection() + '\\s*[:=]\\s*\\(?.*\\)?[-=]>')
     @_search()
 
-  cancel: ->
-    clearTimeout(@_timer) if @_timer?
+  cancel: -> @_resetSearch()
 
-  _findSelection: ->
-    editorPane().activeEditor().getSelection()
+  _resetSearch: ->
+    global.clearTimeout(@_timer) if @_timer?
+    @_index = 0
+    @_timer = null
 
+  _getSelection: -> editorPane().getSelection()
+
+  #This stops at the first match and opens it, maybe we want to show all matches incrementally?
   _search: =>
     if (f=fileList().at(@_index))?
       if f.get('fileType') == 'coffeescript'
@@ -45,8 +48,10 @@ class FindFunctionDefinition
 
   _openFileToDefinition: (file, line) ->
     editorPane().showEditorForFile(file, line:line)
+    @_resetSearch()
 
 instance = -> new FindFunctionDefinition()
 
+exports._class = FindFunctionDefinition
 exports.register = ->
-  $(document).bind('keydown', 'ctrl+/', -> instance().run())
+  $(document).bind('keydown', 'ctrl+/', -> instance().search())

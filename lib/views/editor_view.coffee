@@ -2,6 +2,7 @@ Haml = require('haml')
 mixin = require('../mixin')
 movable = require('./mixins/movable')
 resizable = require('./mixins/resizable')
+Backbone = require ('backbone')
 
 class EditorView extends Backbone.View
   className: 'editor'

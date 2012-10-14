@@ -4,7 +4,6 @@ path = require("path")
 map =
   coffeescript: ["coffee"]
   ruby:         ["rb"]
-  coffeescript: ["coffee"]
   css:          ["sass", "css"]
   html:         ["htmlembedded"]
 

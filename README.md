@@ -10,3 +10,16 @@ First download [node-webkit binary](http://github.com/rogerwang/node-webkit) for
 $ git clone https://github.com/jricketson/mredcontext.git
 $ /Path/To/nw mredcontext
 ````
+
+# How to run tests
+
+install mocha
+```
+sudo npm install -g mocha
+
+```
+
+then run
+```
+make test
+```

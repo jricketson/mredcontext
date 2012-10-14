@@ -1,4 +1,5 @@
 fs = require('fs')
+Backbone = require ('backbone')
 
 class ConfigurationManager extends Backbone.Model
   rootConfigDir: -> 

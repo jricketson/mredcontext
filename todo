@@ -13,7 +13,6 @@ allow open in a directory <-- not possible until implemented by nw
 
 GOTO SYMBOL
   find all definitions in a list (like the file finder) and allow user to choose
-  go to line
 
 NAVIGATION
   navigation overview in panel at top

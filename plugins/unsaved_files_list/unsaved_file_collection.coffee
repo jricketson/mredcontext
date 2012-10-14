@@ -1,3 +1,5 @@
+Backbone = require ('backbone')
+
 class UnsavedFileCollection extends Backbone.FilteredCollection
   collectionFilter: (item) ->
     item.isDirty()
