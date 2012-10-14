@@ -30,7 +30,7 @@ class File extends Backbone.Model
         throw err
       @set({content: data, dirty: false}, {silent: true})
       @_alreadyLoaded = true
-      @trigger('reloaded')
+      @trigger('loaded:content')
       readPromise.resolve()
     )
     readPromise

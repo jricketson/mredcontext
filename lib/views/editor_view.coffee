@@ -22,12 +22,15 @@ class EditorView extends Backbone.View
     'click .closer': '_close'
 
   initialize: (options) ->
-    @model.on('reloaded', @_setFileContent)
+    @model.on('change:content', @_setFileContent)
+    @model.on('loaded:content', @_setFileContent)
     @model.on('change:fileType', => 
       @codeEditor.setOption('mode', @model.get('fileType')) if @codeEditor?
     )
     @position = options.position
     @_initialLine = options.line
+    @_listenToModelChanges = true
+    @_listenToCodeEditorChanges = true
 
   toJSON: ->
     path: @model.get('path')
@@ -36,7 +39,7 @@ class EditorView extends Backbone.View
       left: @$el.position().left
       width: @$el.width()
       height: @$el.height()
-    line: @_scrollLine()
+    line: @_getCodeEditorScrollLine()
 
   getSelection: -> @codeEditor.getSelection()
   save: -> @model.writeContentsToDisk()
@@ -48,12 +51,18 @@ class EditorView extends Backbone.View
     @_bringToFront(e)
 
   _setFileContent: =>
-    return unless @model.loaded()
+    return unless @_listenToModelChanges
     @_listenToCodeEditorChanges = false
     @codeEditor.setValue(@model.get('content'))
     @_listenToCodeEditorChanges = true
     return unless @_initialLine
     setTimeout((=> @_scrollToLine(@_initialLine)), 100 )
+
+  _codeEditorHasChanged: =>
+    if @_listenToCodeEditorChanges
+      @_listenToModelChanges = false
+      @model.set(content: @codeEditor.getValue())    
+      @_listenToModelChanges = true
 
   render: ->
     @$el.html(@template(model:@model))
@@ -68,9 +77,7 @@ class EditorView extends Backbone.View
       lineWrapping: false
       autoClearEmptyLines: true
       lineNumbers: true
-      onChange: => 
-        if @_listenToCodeEditorChanges
-          @model.set(content: @codeEditor.getValue())
+      onChange: @_codeEditorHasChanged
     )
     @_setFileContent()
     setTimeout(=>
@@ -81,7 +88,7 @@ class EditorView extends Backbone.View
     , 10)    
     @
 
-  _scrollLine: ->
+  _getCodeEditorScrollLine: ->
     @codeEditor.coordsChar(@codeEditor.getScrollInfo()).line
 
   _scrollToLine: (line) ->

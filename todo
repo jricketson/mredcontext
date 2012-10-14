@@ -22,7 +22,6 @@ NAVIGATION
 
 EDITORS
   editors should stay out of each others way
-  many editors for the same file should update each other
 
 NOTES
   user can create a note and attach to the canvas
