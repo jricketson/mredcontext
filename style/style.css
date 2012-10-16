@@ -91,6 +91,8 @@
           font-size: 110%; }
         #fileFinder .results .item .item_inner .fullName {
           font-size: 80%; }
+      #fileFinder .results .item.highlighted {
+        background: #888888; }
 
 #unsavedFileList {
   position: absolute;
