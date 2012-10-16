@@ -83,15 +83,45 @@
           font-size: 110%
         .fullName
           font-size: 80%
-      &.highlighted
-        background: #888
 
+#findFunction
+  position: absolute
+  width: 450px
+  margin-left: (-300px/2)
+  left: 50%
+  top: 0
+  max-height: 400px
+  display: none
+  background: white
+  font-family: sans-serif
+  overflow: hidden
+  z-index: 100000
+  .results 
+    overflow-x: hidden
+    overflow-y: auto
+    max-height: 380px
+    .item
+      @include list_item
+      overflow-x: hidden
+      overflow-y: auto
+      .item_inner
+        margin: 2px
+        overflow: hidden
+        text-overflow: ellipsis
+        margin: 4px 0
+        padding: 5px 16px
+        .name
+          font-size: 110%
+        .lineNumber
+          font-size: 80%
+        .line
+          font-size: 80%
 
 #unsavedFileList
   position: absolute
+  width: 200px
   right: 0
   top: 0
-  width: 200px
   background: #DDD
   font-family: sans-serif
   display: none

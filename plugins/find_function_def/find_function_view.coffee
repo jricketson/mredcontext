@@ -1,63 +1,74 @@
 Haml = require('haml')
 events = require('events')
-Backbone = require ('backbone')
 mixin = require('../../lib/mixin')
 fileList = require('../../lib/models/file_list').fileList
 editorPane = require('../../lib/views/editor_pane_view').editorPane
 configuration = require('../../lib/configuration').configuration
 searcher = require('./searcher')
+Backbone = require ('backbone')
 
-class FileFinderView extends Backbone.View
-  id: "fileFinder"
+class FindFunctionView extends Backbone.View
+  id: "findFunction"
 
   template: Haml """
-  %input.filename
   .results
   """
   matchtemplate: Haml """
-  .item(data-path=match.get('path'))
+  .item(data-path=match.get('path') data-linenumber=lineNumber)
     .item_inner
-      .name= match.name()
-      .fullName= match.projectPath()
+      .title
+        %span.name= match.name()
+         
+        %span.lineNumber
+           (line: 
+          = lineNumber
+          )
+      .line= line
   """
 
   events:
-    "keyup input" : "_onkeypressed"
     "click .results .item": "_selectFile"
+    "keyup" : "_onkeypressed"
 
   initialize: ->
-    @_state = searchIndex: ';'
-    @model.on('add', @_indexFile)
-    @searcher = new searcher.Searcher(@_state)
+    @_searcher = new searcher.Searcher(@_state)
 
   render: ->
     @$el.html(@template())
+    @$el.attr('tabindex', '1')
     @
 
   hide: ->
     @_removeResults()
     @$el.hide()
+    @_searcher.cancel
+    @
 
-  show: ->
-    @$el.show()
-    @$el.find("input.filename").val('').focus()
+  search: ->
+    @_searcher.search(@_getSelection()).progress(
+      (file, lineNumber, line) =>
+        @$el.find(".results").append(@matchtemplate('match':file, lineNumber:lineNumber, line: line))
+    ).fail(
+      (err) ->  # tell the user
+    )
+    @$el.show().focus()
     @_selectedIndex = -1
     @
 
-  _indexFile: (file) => @_state.searchIndex += "#{file.projectPath()};"
   _selectFile: (e) -> @_resultSelected($(e.currentTarget))
+  _getSelection: -> editorPane().getSelection()
+  _removeResults: -> @$el.find(".results").empty()
 
-  _onkeypressed: (e) ->
+  _onkeypressed: (e) -> 
     switch $.hotkeys.specialKeys[e.which]
       when "up" then @_goUp(e)
       when "down" then @_goDown(e)
       when "return" then @_chooseSelection()
       when "esc" then @hide()
-      else @_filenameChanged(e)
 
   _resultSelected: (result) ->
-    @searcher.resetSearch()
-    editorPane().showEditorForFile(@model.getByPath(result.data('path')))
+    @_searcher.resetSearch()
+    editorPane().showEditorForFile(@model.getByPath(result.data('path')), line: result.data('linenumber'))
     @hide()
 
   _chooseSelection: (e) ->
@@ -76,21 +87,7 @@ class FileFinderView extends Backbone.View
     return if @_selectedIndex < 0
     @$el.find('.results .item').eq(@_selectedIndex).addClass('highlighted')
 
-  _filenameChanged: (e) ->
-    searchString = $(e.target).val()
-    return if searchString == @searcher.currentSearch()
-    @_removeResults()
-    return @searcher.resetSearch() if searchString == ''
-    @searcher.filesMatching(searchString).progress(
-      (matchPath) =>
-        match=fileList().getByPath(configuration.get('rootPath')+matchPath)
-        @$el.find(".results").append(@matchtemplate('match':match))
-    )
-
-  _removeResults: -> @$el.find(".results").empty()
-
-mixin.include(FileFinderView, events.EventEmitter::)
 exports.register = ->
-  fileFinder = new FileFinderView(model:fileList())
-  $("body").append fileFinder.render().el
-  $(document).bind('keydown', 'ctrl+p', -> fileFinder.show())
+  view = new FindFunctionView(model:fileList())
+  $("body").append view.render().el
+  $(document).bind('keyup', 'ctrl+/', -> view.search())

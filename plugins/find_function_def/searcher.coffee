@@ -1,33 +1,32 @@
 fileList = require("#{process.cwd()}/lib/models/file_list").fileList
 editorPane = require("#{process.cwd()}/lib/views/editor_pane_view").editorPane
 
-class FindFunctionDefinition
+class Searcher
   DELAY:1
 
   constructor: ->
-    @_resetSearch()
+    @resetSearch()
 
-  search: ->
-    @_resetSearch()
-    @_regex = new RegExp(@_getSelection() + '\\s*[:=]\\s*\\(?.*\\)?[-=]>')
+  search: (searchString)->
+    @resetSearch()
+    @_regex = new RegExp(searchString + '\\s*[:=]\\s*\\(?.*\\)?[-=]>')
     @_search()
+    @_promise
 
-  cancel: -> @_resetSearch()
-
-  _resetSearch: ->
+  resetSearch: ->
     global.clearTimeout(@_timer) if @_timer?
     @_index = 0
     @_timer = null
-
-  _getSelection: -> editorPane().getSelection()
+    @_promise = new $.Deferred()
 
   #This stops at the first match and opens it, maybe we want to show all matches incrementally?
   _search: =>
     if (f=fileList().at(@_index))?
       if f.get('fileType') == 'coffeescript'
         @_findLineMatching(f).
-          done( (line) => 
-            @_openFileToDefinition(f, line)
+          done( (lineNumber, line) =>
+            @_promise.notify(f, lineNumber, line)
+            @_delaySearch()
           ).
           fail(@_delaySearch)
       else
@@ -35,23 +34,15 @@ class FindFunctionDefinition
 
   _delaySearch: =>
     @_index += 1
-    @_timer = setTimeout(@_search, FindFunctionDefinition.DELAY)
+    @_timer = setTimeout(@_search, Searcher.DELAY)
 
   _findLineMatching: (file, functionName) ->
     promise = new $.Deferred()
     file.loadFromDiskIfNeeded().done(=>
       for line, index in file.get('content').split("\n")
-        return promise.resolve(index) if @_regex.test(line)
+        return promise.resolve(index, line) if @_regex.test(line)
       promise.reject()
     )
     promise
 
-  _openFileToDefinition: (file, line) ->
-    editorPane().showEditorForFile(file, line:line)
-    @_resetSearch()
-
-instance = -> new FindFunctionDefinition()
-
-exports._class = FindFunctionDefinition
-exports.register = ->
-  $(document).bind('keydown', 'ctrl+/', -> instance().search())
+exports.Searcher = Searcher

@@ -1,5 +1,5 @@
-open file by name needs to sort matches by name higher than match by path
-filefinder needs to respond to cursor
+implement testing framework <-- not possible until can open other endpoints as implemented by nw
+
 keyboard shortcuts for:
  
   close
@@ -11,9 +11,6 @@ html filetype is not rendering
 
 change font size (per editor?)
 allow open in a directory <-- not possible until implemented by nw
-
-GOTO SYMBOL
-  find all definitions in a list (like the file finder) and allow user to choose
 
 NAVIGATION
   navigation overview in panel at top
@@ -32,8 +29,14 @@ watch files for changes on disk
   - updates to loaded files
   - deleted files/directories
 
+GOTO SYMBOL
+  arrange matches nearer the selection
+
 BUG
   the configuration had an extra curly... I think that maybe the config writer should have a lock.
 
 LATER
 ignore things that are gitignored
+
+NOTES:
+wc: find . -regex ".*\(coffee\|main.js\|style.sass\)" -not -ipath "*node_modules*" | xargs wc -l | sort -n

@@ -81,6 +81,8 @@
       #fileFinder .results .item:active {
         position: relative;
         top: 1px; }
+      #fileFinder .results .item.highlighted {
+        background: #888888; }
       #fileFinder .results .item .item_inner {
         margin: 2px;
         overflow: hidden;
@@ -91,14 +93,57 @@
           font-size: 110%; }
         #fileFinder .results .item .item_inner .fullName {
           font-size: 80%; }
-      #fileFinder .results .item.highlighted {
+
+#findFunction {
+  position: absolute;
+  width: 450px;
+  margin-left: -150px;
+  left: 50%;
+  top: 0;
+  max-height: 400px;
+  display: none;
+  background: white;
+  font-family: sans-serif;
+  overflow: hidden;
+  z-index: 100000; }
+  #findFunction .results {
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 380px; }
+    #findFunction .results .item {
+      padding: 0;
+      width: 100%;
+      background: #555555;
+      -webkit-border-radius: 7px;
+      border-radius: 7px;
+      margin: 2px 0;
+      color: white;
+      cursor: pointer;
+      overflow-x: hidden;
+      overflow-y: auto; }
+      #findFunction .results .item:active {
+        position: relative;
+        top: 1px; }
+      #findFunction .results .item.highlighted {
         background: #888888; }
+      #findFunction .results .item .item_inner {
+        margin: 2px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin: 4px 0;
+        padding: 5px 16px; }
+        #findFunction .results .item .item_inner .name {
+          font-size: 110%; }
+        #findFunction .results .item .item_inner .lineNumber {
+          font-size: 80%; }
+        #findFunction .results .item .item_inner .line {
+          font-size: 80%; }
 
 #unsavedFileList {
   position: absolute;
+  width: 200px;
   right: 0;
   top: 0;
-  width: 200px;
   background: #dddddd;
   font-family: sans-serif;
   display: none;
@@ -119,6 +164,8 @@
     #unsavedFileList .unsavedFiles .item:active {
       position: relative;
       top: 1px; }
+    #unsavedFileList .unsavedFiles .item.highlighted {
+      background: #888888; }
     #unsavedFileList .unsavedFiles .item .name {
       margin: 2px;
       overflow: hidden;
