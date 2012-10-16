@@ -1,5 +1,6 @@
 extend = (obj, mixin) ->
-  obj[name] = method for name, method of mixin        
+  for name, method of mixin
+    obj[name] = method
   obj
 
 include = (klass, mixin) ->

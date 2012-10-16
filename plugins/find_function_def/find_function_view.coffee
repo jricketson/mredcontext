@@ -1,9 +1,10 @@
 Haml = require('haml')
 events = require('events')
-mixin = require('../../lib/mixin')
-fileList = require('../../lib/models/file_list').fileList
-editorPane = require('../../lib/views/editor_pane_view').editorPane
-configuration = require('../../lib/configuration').configuration
+mixin = require("#{process.cwd()}/lib/mixin")
+selectable = require("#{process.cwd()}/lib/views/mixins/selectable")
+fileList = require("#{process.cwd()}/lib/models/file_list").fileList
+editorPane = require("#{process.cwd()}/lib/views/editor_pane_view").editorPane
+configuration = require("#{process.cwd()}/lib/configuration").configuration
 searcher = require('./searcher')
 Backbone = require ('backbone')
 
@@ -27,7 +28,7 @@ class FindFunctionView extends Backbone.View
   """
 
   events:
-    "click .results .item": "_selectFile"
+    "click .results .item": "_selectItem"
     "keyup" : "_onkeypressed"
 
   initialize: ->
@@ -39,12 +40,12 @@ class FindFunctionView extends Backbone.View
     @
 
   hide: ->
-    @_removeResults()
     @$el.hide()
     @_searcher.cancel
     @
 
   search: ->
+    @selectableReset()
     @_searcher.search(@_getSelection()).progress(
       (file, lineNumber, line) =>
         @$el.find(".results").append(@matchtemplate('match':file, lineNumber:lineNumber, line: line))
@@ -52,41 +53,16 @@ class FindFunctionView extends Backbone.View
       (err) ->  # tell the user
     )
     @$el.show().focus()
-    @_selectedIndex = -1
     @
 
-  _selectFile: (e) -> @_resultSelected($(e.currentTarget))
   _getSelection: -> editorPane().getSelection()
-  _removeResults: -> @$el.find(".results").empty()
-
-  _onkeypressed: (e) -> 
-    switch $.hotkeys.specialKeys[e.which]
-      when "up" then @_goUp(e)
-      when "down" then @_goDown(e)
-      when "return" then @_chooseSelection()
-      when "esc" then @hide()
 
   _resultSelected: (result) ->
     @_searcher.resetSearch()
     editorPane().showEditorForFile(@model.getByPath(result.data('path')), line: result.data('linenumber'))
     @hide()
 
-  _chooseSelection: (e) ->
-    @_resultSelected(@$el.find('.results .item').eq(@_selectedIndex))
-
-  _goUp: (e) ->
-    @_selectedIndex-=1
-    @_highlightSelection()
-
-  _goDown: (e) ->
-    @_selectedIndex+=1
-    @_highlightSelection()
-
-  _highlightSelection: ->
-    @$el.find('.results .item.highlighted').removeClass('highlighted')
-    return if @_selectedIndex < 0
-    @$el.find('.results .item').eq(@_selectedIndex).addClass('highlighted')
-
+mixin.include(FindFunctionView, selectable)
 exports.register = ->
   view = new FindFunctionView(model:fileList())
   $("body").append view.render().el
