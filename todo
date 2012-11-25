@@ -21,6 +21,8 @@ NAVIGATION
 
 EDITORS
   editors should stay out of each others way
+  allow user to choose a theme
+  allow user to choose the file type/syntax
 
 NOTES
   user can create a note and attach to the canvas

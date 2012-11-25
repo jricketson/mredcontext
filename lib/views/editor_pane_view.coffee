@@ -48,4 +48,4 @@ class EditorPaneView extends Backbone.View
     layout = (e.toJSON() for e in @_editors)
     @trigger('layoutUpdated', layout)
 
-exports.editorPane = -> @_instances._editor_pane ||= new EditorPaneView(el:$('#editorPane'))
+exports.editorPane = -> _instances._editor_pane ||= new EditorPaneView(el:$('#editorPane'))

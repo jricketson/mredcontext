@@ -3,6 +3,7 @@ mixin = require('../mixin')
 movable = require('./mixins/movable')
 resizable = require('./mixins/resizable')
 Backbone = require ('backbone')
+application = require("../application").application()
 
 class EditorView extends Backbone.View
   className: 'editor'
@@ -13,6 +14,8 @@ class EditorView extends Backbone.View
     .codeEditor
     .resizer
     .closer
+    .statusBar
+      .theme
   """
 
   events:
@@ -20,6 +23,26 @@ class EditorView extends Backbone.View
     'mousedown': '_mousedown'
     'click': '_bringToFront'
     'click .closer': '_close'
+
+  #TODO: it would be nice to make these autoloading
+  themes: [
+    'ambiance',
+    'ambiance-mobile',
+    'blackboard',
+    'cobalt',
+    'eclipse',
+    'elegant',
+    'erlang-dark',
+    'lesser-dark',
+    'monokai',
+    'neat',
+    'night',
+    'rubyblue',
+    'solarized',
+    'twilight',
+    'vibrant-ink',
+    'xq-dark'
+  ]
 
   initialize: (options) ->
     @model.on('change:content', @_setFileContent)
@@ -31,6 +54,8 @@ class EditorView extends Backbone.View
     @_initialLine = options.line
     @_listenToModelChanges = true
     @_listenToCodeEditorChanges = true
+    @_theme = 'ambiance'
+    @_loadTheme(@_theme)
 
   toJSON: ->
     path: @model.get('path')
@@ -65,7 +90,7 @@ class EditorView extends Backbone.View
       @_listenToModelChanges = true
 
   render: ->
-    @$el.html(@template(model:@model))
+    @$el.html(@template(model:@model, theme: @_theme))
     @$el.css(
       top: @position?.top || 100
       left: @position?.left || 100
@@ -78,6 +103,7 @@ class EditorView extends Backbone.View
       autoClearEmptyLines: true
       lineNumbers: true
       onChange: @_codeEditorHasChanged
+      theme: @_theme
     )
     @_setFileContent()
     setTimeout(=>
@@ -107,6 +133,9 @@ class EditorView extends Backbone.View
         height
     )
     @codeEditor.refresh()
+
+  _loadTheme: (theme) ->
+    application.loadCssResource("#{application.CODEMIRROR_LOCATION}/theme/#{theme}.css")
 
 mixin.include(EditorView, movable)
 mixin.include(EditorView, resizable)

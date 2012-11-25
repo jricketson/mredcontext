@@ -12,11 +12,11 @@
   require("coffee-script");
   global.Backbone = require('backbone'); //# TODO: make this not required for running tests
   global._ = require('underscore'); //# TODO: make this not required for running tests
-  require('backbone-filtered-collection')
-  bootstrap = require("./lib/bootstrap");
+  require('backbone-filtered-collection');
+  application = require("./lib/application").application();
   
   $(document).ready(function() {
-    return bootstrap.bootstrap();
+    application.bootstrap();
   });
 
 }).call(this);
