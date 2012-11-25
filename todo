@@ -11,8 +11,6 @@ keyboard shortcuts for:
 
 html filetype is not rendering
 
-change font size (per editor?)
-
 NAVIGATION
   navigation overview in panel at top
   user can drag the canvas
@@ -21,8 +19,8 @@ NAVIGATION
 
 EDITORS
   editors should stay out of each others way
-  allow user to choose a theme
   allow user to choose the file type/syntax
+  change font size (per editor?)
 
 NOTES
   user can create a note and attach to the canvas

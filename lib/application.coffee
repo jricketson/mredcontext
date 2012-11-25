@@ -18,7 +18,7 @@ class Application
       unless file?
         file = new FileModel.File(path:conf.path)
         @fileList().add(file)
-      @editorPane().showEditorForFile(file, position:conf.position, line:conf.line)
+      @editorPane().showEditorForFile(file, conf)
     console.log('layout reloaded')
 
   loadPlugins: ->

@@ -49,7 +49,10 @@
     background: white; }
   .editor .statusBar .theme {
     font-family: sans-serif;
-    color: white; }
+    color: white;
+    background-color: #555555; }
+    .editor .statusBar .theme option {
+      background-color: #555555; }
 
 #fileFinder {
   position: absolute;

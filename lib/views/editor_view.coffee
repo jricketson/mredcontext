@@ -15,7 +15,12 @@ class EditorView extends Backbone.View
     .resizer
     .closer
     .statusBar
-      .theme= theme
+      %select.theme
+        :each t in themes
+          :if t == theme
+            %option(selected=true)= t
+          :if t != theme
+            %option= t
   """
 
   events:
@@ -23,6 +28,7 @@ class EditorView extends Backbone.View
     'mousedown': '_mousedown'
     'click': '_bringToFront'
     'click .closer': '_close'
+    'change .theme' :'_changeTheme'
 
   #TODO: it would be nice to make these autoloading
   themes: [
@@ -54,8 +60,7 @@ class EditorView extends Backbone.View
     @_initialLine = options.line
     @_listenToModelChanges = true
     @_listenToCodeEditorChanges = true
-    @_theme = 'ambiance'
-    @_loadTheme(@_theme)
+    @_theme = options.theme || 'ambiance'
 
   toJSON: ->
     path: @model.get('path')
@@ -65,6 +70,7 @@ class EditorView extends Backbone.View
       width: @$el.width()
       height: @$el.height()
     line: @_getCodeEditorScrollLine()
+    theme: @_theme
 
   getSelection: -> @codeEditor.getSelection()
   save: -> @model.writeContentsToDisk()
@@ -90,7 +96,7 @@ class EditorView extends Backbone.View
       @_listenToModelChanges = true
 
   render: ->
-    @$el.html(@template(model:@model, theme: @_theme))
+    @$el.html(@template(model:@model, theme: @_theme, themes: @themes))
     @$el.css(
       top: @position?.top || 100
       left: @position?.left || 100
@@ -103,8 +109,8 @@ class EditorView extends Backbone.View
       autoClearEmptyLines: true
       lineNumbers: true
       onChange: @_codeEditorHasChanged
-      theme: @_theme
     )
+    @_setEditorTheme(@_theme)
     @_setFileContent()
     setTimeout(=>
       @setHeightAndWidth(
@@ -133,6 +139,13 @@ class EditorView extends Backbone.View
         height
     )
     @codeEditor.refresh()
+
+  _setEditorTheme: (@_theme) ->
+    @_loadTheme(@_theme)
+    @codeEditor.setOption('theme', @_theme)
+
+  _changeTheme: (e) ->
+    @_setEditorTheme($(e.currentTarget).val())
 
   _loadTheme: (theme) ->
     application.loadCssResource("#{application.CODEMIRROR_LOCATION}/theme/#{theme}.css")
