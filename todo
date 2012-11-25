@@ -10,7 +10,6 @@ keyboard shortcuts for:
 html filetype is not rendering
 
 change font size (per editor?)
-allow open in a directory <-- not possible until implemented by nw
 
 NAVIGATION
   navigation overview in panel at top
@@ -31,6 +30,7 @@ watch files for changes on disk
 
 GOTO SYMBOL
   arrange matches nearer the selection
+  the new editor should show up next to the selection
 
 BUG
   the configuration had an extra curly... I think that maybe the config writer should have a lock.

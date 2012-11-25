@@ -32,8 +32,7 @@ loadPlugins= ->
   promise
 
 exports.bootstrap= ->
-#  root_path = process.cwd() + "/"
-  root_path="/home/jon/data/Projects/atlas/"
+  root_path = GUI.App.argv[0]
   console.log("Starting in '#{root_path}'")
   configuration.loadConfigFor(root_path).done -> 
     console.log('config loaded')
