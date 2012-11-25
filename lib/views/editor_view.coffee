@@ -93,7 +93,7 @@ class EditorView extends Backbone.View
 
   _scrollToLine: (line) ->
     coords = @codeEditor.charCoords({line:line,ch:0}, 'local')
-    @codeEditor.scrollTo(0, coords.y)
+    @codeEditor.scrollTo(0, coords.top)
 
   setHeightAndWidth: (height, width) ->
     hDiff = height - @$el.height()

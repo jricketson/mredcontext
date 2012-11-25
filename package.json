@@ -2,6 +2,6 @@
   "name": "mr-ed-context",
   "main": "index.html",
   "window": {
-    "toolbar": false
+    "toolbar": true
   }
 }

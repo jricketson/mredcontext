@@ -23,7 +23,13 @@ class ConfigurationManager extends Backbone.Model
             if err
               promise.reject(err)
               throw err
-            @set(JSON.parse(data), {silent: true})
+            try
+              result = JSON.parse(data)
+            catch e
+              console.error("failed parsing stored configuration from disk '#{@configPath()}'")
+              promise.reject(e)
+              throw e
+            @set(result, {silent: true})
             promise.resolve()
           )
         else
@@ -33,6 +39,7 @@ class ConfigurationManager extends Backbone.Model
     )
     promise
 
+  #TODO: need to put a synchronised lock around this
   _writeConfig: ->
     writePromise = new $.Deferred()
     fs.writeFile(@configPath(), JSON.stringify(@toJSON()), 'utf8', (err) ->
