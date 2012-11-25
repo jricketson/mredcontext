@@ -50,7 +50,7 @@ class Application
         @fileList().startRead().done (elapsedMilliSeconds) =>
           console.log("finished reading #{@fileList().length} files in #{elapsedMilliSeconds}ms")
         @reloadLayout()
-        @editorPane().on('layoutUpdated', (layout) -> @configuration.set(layout:layout))  
+        @editorPane().on('layoutUpdated', (layout) => @configuration.set(layout:layout))  
 
         @setupShortcuts()
 

@@ -11,7 +11,7 @@
   top: 0;
   left: 0;
   background: white;
-  padding: 0 10px 32px 10px;
+  padding: 0 10px 46px 10px;
   background: #555555;
   -webkit-border-radius: 6px;
   border-radius: 5px;
@@ -20,9 +20,9 @@
     cursor: move; }
   .editor .titleBar {
     font-family: sans-serif;
+    color: white;
     height: 22px;
     width: 100%;
-    color: white;
     font-size: 80%;
     padding-top: 2px; }
   .editor .resizer {
@@ -47,6 +47,9 @@
   .editor .codeEditor {
     font-size: 120%;
     background: white; }
+  .editor .statusBar .theme {
+    font-family: sans-serif;
+    color: white; }
 
 #fileFinder {
   position: absolute;

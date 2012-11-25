@@ -15,7 +15,7 @@ class EditorView extends Backbone.View
     .resizer
     .closer
     .statusBar
-      .theme
+      .theme= theme
   """
 
   events:
