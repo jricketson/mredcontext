@@ -6,6 +6,10 @@ class EditorPaneView extends Backbone.View
 
   id: "editorPane"
 
+  events: 
+    'mousedown': '_startScrolling'
+    'mouseup': '_stopScrolling'
+
   initialize: ->
     @_editors = []
 
@@ -49,6 +53,32 @@ class EditorPaneView extends Backbone.View
   _updateLayout: ->
     layout = (e.toJSON() for e in @_editors)
     @trigger('layoutUpdated', layout)
+
+  _startScrolling: (e) ->
+    return unless e.target == @el
+    @_scroller = new Scroller(this, e.clientX, e.clientY)
+    @$el.on('mousemove', (e) => @_scroller.mousemove(e) )
+    @$el.css('cursor': 'move')
+    false
+
+  _stopScrolling: (e) ->
+    return unless e.target == @el
+    @$el.off('mousemove')
+    @$el.css('cursor': 'default')
+    false
+
+class Scroller
+
+  constructor: (@pane, @startX, @startY) ->
+
+  mousemove: (e) ->
+    for editor, i in @pane._editors
+      position = editor.getPosition()
+      position.top += (e.clientY - @startY)
+      position.left += (e.clientX - @startX)
+      editor.setPosition(position)
+    @startX = e.clientX
+    @startY = e.clientY
 
 exports.editorPane = -> 
   unless _instances._editor_pane?

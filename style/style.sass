@@ -8,51 +8,53 @@
   top: 0
   bottom: 0
 
-.editor
-  position: absolute
-  top: 0
-  left: 0
-  background: white
-  padding: 0 10px 46px 10px
-  background: #555
-  -webkit-border-radius: 6px
-  border-radius: 5px
-  cursor: move
-  .moveHandle
-    cursor: move
-  .titleBar
-    @include show_text
-    height: 22px
-    width: 100%
-    font-size: 80%
-    padding-top: 2px
-  .resizer
-    background-image: url('../images/resize.png')
-    width: 18px
-    height: 18px
-    position: absolute
-    bottom: 0
-    right: 0
-    cursor: se-resize
-  .closer
-    @include show_text
-    &:before
-      content: 'x'
+#editorPane
+  height: 100%
+  .editor
     position: absolute
     top: 0
-    right: 0
-    width: 18px
-    height: 18px
-    cursor: pointer
-  .codeEditor
-    font-size: 120%
+    left: 0
     background: white
-  .statusBar
-    .theme
+    padding: 0 10px 46px 10px
+    background: #555
+    -webkit-border-radius: 6px
+    border-radius: 5px
+    cursor: move
+    .moveHandle
+      cursor: move
+    .titleBar
       @include show_text
-      background-color: #555
-      option
+      height: 22px
+      width: 100%
+      font-size: 80%
+      padding-top: 2px
+    .resizer
+      background-image: url('../images/resize.png')
+      width: 18px
+      height: 18px
+      position: absolute
+      bottom: 0
+      right: 0
+      cursor: se-resize
+    .closer
+      @include show_text
+      &:before
+        content: 'x'
+      position: absolute
+      top: 0
+      right: 0
+      width: 18px
+      height: 18px
+      cursor: pointer
+    .codeEditor
+      font-size: 120%
+      background: white
+    .statusBar
+      .theme
+        @include show_text
         background-color: #555
+        option
+          background-color: #555
 
 #fileFinder
   position: absolute

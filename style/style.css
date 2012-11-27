@@ -6,53 +6,55 @@
   top: 0;
   bottom: 0; }
 
-.editor {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: white;
-  padding: 0 10px 46px 10px;
-  background: #555555;
-  -webkit-border-radius: 6px;
-  border-radius: 5px;
-  cursor: move; }
-  .editor .moveHandle {
-    cursor: move; }
-  .editor .titleBar {
-    font-family: sans-serif;
-    color: white;
-    height: 22px;
-    width: 100%;
-    font-size: 80%;
-    padding-top: 2px; }
-  .editor .resizer {
-    background-image: url("../images/resize.png");
-    width: 18px;
-    height: 18px;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    cursor: se-resize; }
-  .editor .closer {
-    font-family: sans-serif;
-    color: white;
+#editorPane {
+  height: 100%; }
+  #editorPane .editor {
     position: absolute;
     top: 0;
-    right: 0;
-    width: 18px;
-    height: 18px;
-    cursor: pointer; }
-    .editor .closer:before {
-      content: "x"; }
-  .editor .codeEditor {
-    font-size: 120%;
-    background: white; }
-  .editor .statusBar .theme {
-    font-family: sans-serif;
-    color: white;
-    background-color: #555555; }
-    .editor .statusBar .theme option {
+    left: 0;
+    background: white;
+    padding: 0 10px 46px 10px;
+    background: #555555;
+    -webkit-border-radius: 6px;
+    border-radius: 5px;
+    cursor: move; }
+    #editorPane .editor .moveHandle {
+      cursor: move; }
+    #editorPane .editor .titleBar {
+      font-family: sans-serif;
+      color: white;
+      height: 22px;
+      width: 100%;
+      font-size: 80%;
+      padding-top: 2px; }
+    #editorPane .editor .resizer {
+      background-image: url("../images/resize.png");
+      width: 18px;
+      height: 18px;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      cursor: se-resize; }
+    #editorPane .editor .closer {
+      font-family: sans-serif;
+      color: white;
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 18px;
+      height: 18px;
+      cursor: pointer; }
+      #editorPane .editor .closer:before {
+        content: "x"; }
+    #editorPane .editor .codeEditor {
+      font-size: 120%;
+      background: white; }
+    #editorPane .editor .statusBar .theme {
+      font-family: sans-serif;
+      color: white;
       background-color: #555555; }
+      #editorPane .editor .statusBar .theme option {
+        background-color: #555555; }
 
 #fileFinder {
   position: absolute;

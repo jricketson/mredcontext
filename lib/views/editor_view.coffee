@@ -56,7 +56,6 @@ class EditorView extends Backbone.View
     @model.on('change:fileType', => 
       @codeEditor.setOption('mode', @model.get('fileType')) if @codeEditor?
     )
-    @position = options.position
     @_initialLine = options.line
     @_listenToModelChanges = true
     @_listenToCodeEditorChanges = true
@@ -64,13 +63,15 @@ class EditorView extends Backbone.View
 
   toJSON: ->
     path: @model.get('path')
-    position:
-      top: @$el.position().top
-      left: @$el.position().left
-      width: @$el.width()
-      height: @$el.height()
+    position: @getPosition()
     line: @_getCodeEditorScrollLine()
     theme: @_theme
+
+  getPosition: ->
+    top: @$el.position().top
+    left: @$el.position().left
+    width: @$el.width()
+    height: @$el.height()
 
   getSelection: -> @codeEditor.getSelection()
   save: -> @model.writeContentsToDisk()
@@ -86,8 +87,8 @@ class EditorView extends Backbone.View
     @_listenToCodeEditorChanges = false
     @codeEditor.setValue(@model.get('content'))
     @_listenToCodeEditorChanges = true
-    return unless @_initialLine
-    setTimeout((=> @_scrollToLine(@_initialLine)), 100 )
+    return unless @options.line
+    setTimeout((=> @_scrollToLine(@options.line)), 100 )
 
   _codeEditorHasChanged: =>
     if @_listenToCodeEditorChanges
@@ -95,14 +96,22 @@ class EditorView extends Backbone.View
       @model.set(content: @codeEditor.getValue())    
       @_listenToModelChanges = true
 
+  setPosition: (position) ->
+    @$el.css(
+      top: position?.top || 100
+      left: position?.left || 100
+      width: position?.width || 500
+      height: position?.height || 300
+    )
+    setTimeout(=>
+      @setHeightAndWidth(
+        position?.height || 300
+        position?.width || 500
+      )
+    , 10)    
+
   render: ->
     @$el.html(@template(model:@model, theme: @_theme, themes: @themes))
-    @$el.css(
-      top: @position?.top || 100
-      left: @position?.left || 100
-      width: @position?.width || 500
-      height: @position?.height || 300
-    )
     @codeEditor = CodeMirror(@$el.find('.codeEditor')[0], 
       mode:  @model.get('fileType')
       lineWrapping: false
@@ -112,12 +121,7 @@ class EditorView extends Backbone.View
     )
     @_setEditorTheme(@_theme)
     @_setFileContent()
-    setTimeout(=>
-      @setHeightAndWidth(
-        @position?.height || 300
-        @position?.width || 500
-      )
-    , 10)    
+    @setPosition(@options.position)
     @
 
   _getCodeEditorScrollLine: ->
