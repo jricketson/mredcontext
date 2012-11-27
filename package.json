@@ -2,6 +2,8 @@
   "name": "mr-ed-context",
   "main": "index.html",
   "window": {
-    "toolbar": true
+    "toolbar": true,
+    "icon": "horse-head.png",
+    "show": false
   }
 }

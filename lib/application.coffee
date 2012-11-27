@@ -5,6 +5,14 @@ class Application
 
   CODEMIRROR_LOCATION: "vendor/codemirror-3.0rc1" 
 
+  constructor: ->
+    @fileList = require('./models/file_list').fileList
+    @editorPane = require('./views/editor_pane_view').editorPane
+    @configuration = require('./configuration').configuration
+
+    @root_path = GUI.App.argv[0]
+    console.log("Starting in '#{@root_path}'")
+
   setupShortcuts: ->
     $(document).bind('keydown', 'ctrl+s', -> editorPane().saveActive())
 
@@ -36,14 +44,24 @@ class Application
   loadCssResource: (url) ->
     $('head').append("<link rel='stylesheet' type='text/css' href='#{url}' />")
 
-  bootstrap: ->
-    @fileList = require('./models/file_list').fileList
-    @editorPane = require('./views/editor_pane_view').editorPane
-    @configuration = require('./configuration').configuration
+  resetWindowPosition: ->
+    win = GUI.Window.get()
+    if (dimensions=@configuration.get('windowDimensions'))?
+      win.resizeTo(dimensions.width, dimensions.height)
+      win.moveTo(dimensions.x, dimensions.y)
 
-    root_path = GUI.App.argv[0]
-    console.log("Starting in '#{root_path}'")
-    @configuration.loadConfigFor(root_path).done => 
+    $(window).resize(=>
+      windowDimensions = 
+        x: win.x
+        y: win.y
+        width: win.width
+        height: win.height
+      @configuration.set(windowDimensions: windowDimensions)
+    )
+    win.show()
+
+  bootstrap: ->
+    @configuration.loadConfigFor(@root_path).done => 
       console.log('config loaded')
       @loadPlugins().done =>
         console.log('plugins loaded')
@@ -51,7 +69,7 @@ class Application
           console.log("finished reading #{@fileList().length} files in #{elapsedMilliSeconds}ms")
         @reloadLayout()
         @editorPane().on('layoutUpdated', (layout) => @configuration.set(layout:layout))  
-
         @setupShortcuts()
+        @resetWindowPosition()
 
 exports.application = -> @_application ||= new Application()

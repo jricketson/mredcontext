@@ -4,6 +4,8 @@ _ = require('underscore')
 
 class EditorPaneView extends Backbone.View
 
+  id: "editorPane"
+
   initialize: ->
     @_editors = []
 
@@ -48,4 +50,8 @@ class EditorPaneView extends Backbone.View
     layout = (e.toJSON() for e in @_editors)
     @trigger('layoutUpdated', layout)
 
-exports.editorPane = -> _instances._editor_pane ||= new EditorPaneView(el:$('#editorPane'))
+exports.editorPane = -> 
+  unless _instances._editor_pane?
+    _instances._editor_pane = new EditorPaneView()
+    $('#pageWrapper').append(_instances._editor_pane.el)
+  _instances._editor_pane 
