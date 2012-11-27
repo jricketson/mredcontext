@@ -51,12 +51,12 @@ class Application
       win.moveTo(dimensions.x, dimensions.y)
 
     $(window).resize(=>
-      windowDimensions = 
+      dimensions = 
         x: win.x
         y: win.y
         width: win.width
         height: win.height
-      @configuration.set(windowDimensions: windowDimensions)
+      @configuration.set(windowDimensions: dimensions) if dimensions.width != 0 and dimensions.height != 0 
     )
     win.show()
 

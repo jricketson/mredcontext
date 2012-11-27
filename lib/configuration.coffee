@@ -39,16 +39,12 @@ class ConfigurationManager extends Backbone.Model
     )
     promise
 
-  #TODO: need to put a synchronised lock around this
-  _writeConfig: ->
-    writePromise = new $.Deferred()
+  _writeConfig: _.throttle((->
     fs.writeFile(@configPath(), JSON.stringify(@toJSON()), 'utf8', (err) ->
       if err
-        writePromise.reject(err)
         throw err
-      writePromise.resolve()
     )
-    writePromise
+  ), 500)
 
   _createDirUnlessItExists: (path) ->
     promise = new $.Deferred()

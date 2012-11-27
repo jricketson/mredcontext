@@ -4,6 +4,8 @@
   "window": {
     "toolbar": true,
     "icon": "horse-head.png",
-    "show": false
+    "show": false,
+    "width": 1024,
+    "height": 1024
   }
 }
