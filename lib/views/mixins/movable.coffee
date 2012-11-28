@@ -10,7 +10,7 @@ exports._startMoving = (e) ->
         @_startPosition.top+(e.clientY-@_startPosition.y),
         @_startPosition.left+(e.clientX-@_startPosition.x)
     )
-    @trigger('moved')
+    @trigger('configUpdated')
 
   mouseup = -> 
     $('body').css('-webkit-user-select':'')

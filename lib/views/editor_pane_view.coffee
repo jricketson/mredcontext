@@ -1,4 +1,5 @@
 editor = require('./editor_view') 
+overviewPane = require('./overview_pane_view') 
 Backbone = require('backbone')
 _ = require('underscore')
 
@@ -12,6 +13,11 @@ class EditorPaneView extends Backbone.View
 
   initialize: ->
     @_editors = []
+    @_overviewPane = new overviewPane.OverviewPaneView(@_editors)
+
+  render: ->
+    @$el.append(@_overviewPane.render().el)
+    this
 
   showEditorForFile: (file, options={}) ->
     file.loadFromDiskIfNeeded()
@@ -25,7 +31,7 @@ class EditorPaneView extends Backbone.View
 
   _newEditor: (file, options) ->
     newEd = new editor.EditorView($.extend({model:file}, options)).render()
-    newEd.on('moved resized', => @_updateLayout())
+    newEd.on('configUpdated', => @_updateLayout())
     newEd.on('focussed', => 
       @_popEditor(newEd)
       @_editors.push(newEd)
@@ -68,7 +74,6 @@ class EditorPaneView extends Backbone.View
     false
 
 class Scroller
-
   constructor: (@pane, @startX, @startY) ->
 
   mousemove: (e) ->
@@ -77,11 +82,12 @@ class Scroller
       position.top += (e.clientY - @startY)
       position.left += (e.clientX - @startX)
       editor.setPosition(position)
+    @pane._updateLayout()
     @startX = e.clientX
     @startY = e.clientY
 
 exports.editorPane = -> 
   unless _instances._editor_pane?
     _instances._editor_pane = new EditorPaneView()
-    $('#pageWrapper').append(_instances._editor_pane.el)
+    $('#pageWrapper').append(_instances._editor_pane.render().el)
   _instances._editor_pane 

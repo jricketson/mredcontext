@@ -108,7 +108,7 @@ class EditorView extends Backbone.View
         position?.height || 300
         position?.width || 500
       )
-    , 10)    
+    , 10)
 
   render: ->
     @$el.html(@template(model:@model, theme: @_theme, themes: @themes))
@@ -132,8 +132,6 @@ class EditorView extends Backbone.View
     @codeEditor.scrollTo(0, coords.top)
 
   setHeightAndWidth: (height, width) ->
-    hDiff = height - @$el.height()
-    wDiff = width - @$el.width()
     edWidth = @$el.find('.codeEditor').width()
     edHeight= @$el.find('.codeEditor').height()
     @$el.height(height)
@@ -147,6 +145,7 @@ class EditorView extends Backbone.View
   _setEditorTheme: (@_theme) ->
     @_loadTheme(@_theme)
     @codeEditor.setOption('theme', @_theme)
+    @trigger('configUpdated')    
 
   _changeTheme: (e) ->
     @_setEditorTheme($(e.currentTarget).val())

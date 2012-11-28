@@ -12,7 +12,7 @@ exports._startResizing = (e) ->
         @_startPosition.height+(e.clientY-@_startPosition.y),
         @_startPosition.width+(e.clientX-@_startPosition.x)
     )
-    @trigger('resized')
+    @trigger('configUpdated')
 
   mouseup = -> 
     $('body').css('-webkit-user-select':'')
