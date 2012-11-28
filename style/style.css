@@ -18,6 +18,9 @@
     z-index: 10000;
     position: absolute;
     background-color: white; }
+    #editorPane #overviewPane div {
+      border: 1px solid #555555;
+      position: absolute; }
   #editorPane .editor {
     position: absolute;
     top: 0;

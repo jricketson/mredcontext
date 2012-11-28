@@ -3,7 +3,6 @@ mixin = require('../mixin')
 movable = require('./mixins/movable')
 resizable = require('./mixins/resizable')
 Backbone = require ('backbone')
-application = require("../application").application()
 
 class EditorView extends Backbone.View
   className: 'editor'
@@ -151,7 +150,9 @@ class EditorView extends Backbone.View
     @_setEditorTheme($(e.currentTarget).val())
 
   _loadTheme: (theme) ->
-    application.loadCssResource("#{application.CODEMIRROR_LOCATION}/theme/#{theme}.css")
+    #TODO: move this to somewhere it makes sense, and also make it not add things that have already been added
+    url = "#{CODEMIRROR_LOCATION}/theme/#{theme}.css"
+    $('head').append("<link rel='stylesheet' type='text/css' href='#{url}' />")
 
 mixin.include(EditorView, movable)
 mixin.include(EditorView, resizable)

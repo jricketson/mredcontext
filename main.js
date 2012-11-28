@@ -8,6 +8,8 @@
   global.process = process;
   global._instances={}
   global.GUI = require('nw.gui')
+  global.CODEMIRROR_LOCATION= "vendor/codemirror-3.0rc1" 
+
 
   require("coffee-script");
   global.Backbone = require('backbone'); //# TODO: make this not required for running tests

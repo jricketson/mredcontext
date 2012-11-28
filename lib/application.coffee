@@ -6,8 +6,6 @@ configuration = require('./configuration').configuration
 
 class Application
 
-  CODEMIRROR_LOCATION: "vendor/codemirror-3.0rc1" 
-
   constructor: ->
 
     @root_path = GUI.App.argv[0]
@@ -40,9 +38,6 @@ class Application
       promise.resolve()
     )
     promise
-
-  loadCssResource: (url) ->
-    $('head').append("<link rel='stylesheet' type='text/css' href='#{url}' />")
 
   resetWindowPosition: ->
     win = GUI.Window.get()

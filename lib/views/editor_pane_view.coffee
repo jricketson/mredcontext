@@ -13,7 +13,7 @@ class EditorPaneView extends Backbone.View
 
   initialize: ->
     @_editors = []
-    @_overviewPane = new overviewPane.OverviewPaneView(@_editors)
+    @_overviewPane = new overviewPane.OverviewPaneView(editors: @_editors)
 
   render: ->
     @$el.append(@_overviewPane.render().el)
@@ -59,6 +59,7 @@ class EditorPaneView extends Backbone.View
   _updateLayout: ->
     layout = (e.toJSON() for e in @_editors)
     @trigger('layoutUpdated', layout)
+    @_overviewPane.update()
 
   _startScrolling: (e) ->
     return unless e.target == @el
