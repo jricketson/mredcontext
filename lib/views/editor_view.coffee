@@ -5,6 +5,7 @@ resizable = require('./mixins/resizable')
 Backbone = require ('backbone')
 
 class EditorView extends Backbone.View
+  CHANGE_PIXELS= 15
   className: 'editor'
 
   template: Haml """
@@ -119,6 +120,10 @@ class EditorView extends Backbone.View
       extraKeys: {
         'Ctrl-W': => @_close()
         'Cmd-W': => @_close()
+        'Alt-Left': => @_width(-1)
+        'Alt-Right': => @_width(1)
+        'Alt-Up': => @_height(-1)
+        'Alt-Down': => @_height(1)
       }
     )
     @codeEditor.on('change', @_codeEditorHasChanged)
@@ -127,6 +132,12 @@ class EditorView extends Backbone.View
     @setPosition(@options.position)
     @
 
+  _height: (amount) ->
+  	@setHeightAndWidth(@$el.height()+amount*CHANGE_PIXELS,@$el.width())
+    
+  _width: (amount) ->
+  	@setHeightAndWidth(@$el.height(),@$el.width()+amount*CHANGE_PIXELS)
+  
   _getCodeEditorScrollLine: ->
     @codeEditor.coordsChar(@codeEditor.getScrollInfo()).line
 
@@ -135,8 +146,6 @@ class EditorView extends Backbone.View
     @codeEditor.scrollTo(0, coords.top)
 
   setHeightAndWidth: (height, width) ->
-    edWidth = @$el.find('.codeEditor').width()
-    edHeight= @$el.find('.codeEditor').height()
     @$el.height(height)
     @$el.width(width)
     @codeEditor.setSize(
