@@ -53,7 +53,7 @@ class EditorPaneView extends Backbone.View
       @_defaultTheme = newTheme
       @_updateLayout()
     )
-    newEd.on('focussed', => 
+    newEd.on('focussed', =>
       @_popEditor(newEd)
       @_editors.push(newEd)
       @_sendEditorsToBack()

@@ -12,6 +12,7 @@ EDITORS
   editors should stay out of each others way
   allow user to choose the file type/syntax
   change font size (per editor?)
+  find in editor
 
 NOTES
   user can create a note and attach to the canvas
