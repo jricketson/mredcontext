@@ -6,13 +6,10 @@ keyboard shortcuts for:
   close
   make wider/narrower
   make longer/shorter
-  move up/down/left/right
 
 html filetype is not rendering
 
 NAVIGATION
-  navigation overview in panel at top
-  user can drag the canvas
   make canvas zoomable
   user can click on overview to recenter
   user can label a section of canvas in the overview
@@ -21,7 +18,6 @@ EDITORS
   editors should stay out of each others way
   allow user to choose the file type/syntax
   change font size (per editor?)
-  editors should default to the style of the last editor modified
 
 NOTES
   user can create a note and attach to the canvas

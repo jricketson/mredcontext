@@ -2,6 +2,9 @@ editor = require('./editor_view')
 overviewPane = require('./overview_pane_view') 
 Backbone = require('backbone')
 _ = require('underscore')
+fileList = require('../models/file_list').fileList
+FileModel = require('../models/file')
+configuration = require('../configuration').configuration
 
 class EditorPaneView extends Backbone.View
 
@@ -19,6 +22,20 @@ class EditorPaneView extends Backbone.View
     @$el.append(@_overviewPane.render().el)
     this
 
+  reloadLayout: ->
+    #To reload the layout before the filelist has finished loading, 
+    #the filelist needs some smarts about finding files on disk vs ones that have already been found from reloading the layout
+    console.log('reloading layout')
+    layout = configuration.get('layout')
+    for conf in layout?.editors || []
+      file = fileList().getByPath(conf.path)
+      unless file?
+        file = new FileModel.File(path:conf.path)
+        fileList().add(file)
+      @showEditorForFile(file, conf)
+    @_defaultTheme = layout?.defaultTheme
+    console.log('layout reloaded')
+
   showEditorForFile: (file, options={}) ->
     file.loadFromDiskIfNeeded()
     newEd = @_newEditor(file, options)
@@ -30,8 +47,12 @@ class EditorPaneView extends Backbone.View
   getSelection: -> @activeEditor().getSelection()
 
   _newEditor: (file, options) ->
-    newEd = new editor.EditorView($.extend({model:file}, options)).render()
+    newEd = new editor.EditorView($.extend({model:file, theme: @_defaultTheme}, options)).render()
     newEd.on('configUpdated', => @_updateLayout())
+    newEd.on('themeUpdated', (newTheme) =>
+      @_defaultTheme = newTheme
+      @_updateLayout()
+    )
     newEd.on('focussed', => 
       @_popEditor(newEd)
       @_editors.push(newEd)
@@ -58,7 +79,7 @@ class EditorPaneView extends Backbone.View
 
   _updateLayout: ->
     layout = (e.toJSON() for e in @_editors)
-    @trigger('layoutUpdated', layout)
+    @trigger('layoutUpdated', {defaultTheme: @_defaultTheme, editors: layout})
     @_overviewPane.update()
 
   _startScrolling: (e) ->

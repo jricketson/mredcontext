@@ -145,6 +145,7 @@ class EditorView extends Backbone.View
     @_loadTheme(@_theme)
     @codeEditor.setOption('theme', @_theme)
     @trigger('configUpdated')    
+    @trigger('themeUpdated', @_theme)
 
   _changeTheme: (e) ->
     @_setEditorTheme($(e.currentTarget).val())
