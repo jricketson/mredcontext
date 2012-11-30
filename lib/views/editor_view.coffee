@@ -116,8 +116,8 @@ class EditorView extends Backbone.View
       lineWrapping: false
       autoClearEmptyLines: true
       lineNumbers: true
-      onChange: @_codeEditorHasChanged
     )
+    @codeEditor.on('change', @_codeEditorHasChanged)
     @_setEditorTheme(@_theme)
     @_setFileContent()
     @setPosition(@options.position)
