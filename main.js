@@ -8,7 +8,7 @@
   global.process = process;
   global._instances={}
   global.GUI = require('nw.gui')
-  global.CODEMIRROR_LOCATION= "vendor/codemirror-3.0rc1" 
+  global.CODEMIRROR_LOCATION= "vendor/codemirror-3.0rc2" 
 
 
   require("coffee-script");
