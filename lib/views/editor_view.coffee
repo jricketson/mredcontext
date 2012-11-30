@@ -116,6 +116,10 @@ class EditorView extends Backbone.View
       lineWrapping: false
       autoClearEmptyLines: true
       lineNumbers: true
+      extraKeys: {
+        'Ctrl-W': => @_close()
+        'Cmd-W': => @_close()
+      }
     )
     @codeEditor.on('change', @_codeEditorHasChanged)
     @_setEditorTheme(@_theme)
